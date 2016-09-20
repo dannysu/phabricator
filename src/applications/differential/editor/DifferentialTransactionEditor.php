@@ -1171,8 +1171,23 @@ final class DifferentialTransactionEditor
     return $action;
   }
 
-  protected function getMailSubjectPrefix() {
-    return PhabricatorEnv::getEnvConfig('metamta.differential.subject-prefix');
+  protected function getMailSubjectPrefix(PhabricatorLiskDAO $object) {
+    $repo_name = null;
+
+    if ($object->getRepository()) {
+      $repo_name = '['.$object->getRepository()->getName().']';
+    }
+
+    if ($repo_name === null) {
+      $repo_name = '['.basename($object->getActiveDiff()->getSourcePath()).']';
+    }
+
+    if ($repo_name === null) {
+      return PhabricatorEnv::getEnvConfig('metamta.differential.subject-prefix');
+    }
+    else {
+      return $repo_name;
+    }
   }
 
   protected function getMailThreadID(PhabricatorLiskDAO $object) {

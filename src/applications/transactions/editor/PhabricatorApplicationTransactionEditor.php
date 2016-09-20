@@ -2523,7 +2523,7 @@ abstract class PhabricatorApplicationTransactionEditor
     $mail
       ->setSensitiveContent(false)
       ->setFrom($this->getActingAsPHID())
-      ->setSubjectPrefix($this->getMailSubjectPrefix())
+      ->setSubjectPrefix($this->getMailSubjectPrefix($object))
       ->setVarySubjectPrefix('['.$action.']')
       ->setThreadID($this->getMailThreadID($object), $this->getIsNewObject())
       ->setRelatedPHID($object->getPHID())
