@@ -135,7 +135,9 @@ final class PhabricatorMailTarget extends Phobject {
     $body = array();
     if ($to_handles) {
       $body[] = phutil_tag('strong', array(), 'To: ');
-      $body[] = phutil_implode_html(', ', mpull($to_handles, 'getName'));
+      foreach ($to_handles as $handle) {
+        $body[] = phutil_safe_html('_'.$handle->getName().' ');
+      }
       $body[] = phutil_tag('br');
     }
     if ($cc_handles) {
