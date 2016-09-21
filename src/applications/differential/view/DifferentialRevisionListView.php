@@ -102,7 +102,16 @@ final class DifferentialRevisionListView extends AphrontView {
         $item->addHeadIcon($icons['flag']);
       }
 
-      $item->setObjectName('D'.$revision->getID());
+      $repo = '';
+      try {
+        $repository = $revision->getRepository();
+        if ($repository) {
+          $repo = '['.$repository->getName().'] ';
+        }
+      }
+      catch (Exception $e) {
+      }
+      $item->setObjectName($repo.'D'.$revision->getID());
       $item->setHeader($revision->getTitle());
       $item->setHref('/D'.$revision->getID());
 

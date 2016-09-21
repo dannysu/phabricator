@@ -497,8 +497,17 @@ final class DifferentialRevisionViewController extends DifferentialController {
   }
 
   private function buildHeader(DifferentialRevision $revision) {
+    $repo = '';
+    try {
+      $repository = $revision->getRepository();
+      if ($repository) {
+        $repo = '['.$repository->getName().'] ';
+      }
+    }
+    catch (Exception $e) {
+    }
     $view = id(new PHUIHeaderView())
-      ->setHeader($revision->getTitle($revision))
+      ->setHeader($repo.$revision->getTitle($revision))
       ->setUser($this->getViewer())
       ->setPolicyObject($revision)
       ->setHeaderIcon('fa-cog');
