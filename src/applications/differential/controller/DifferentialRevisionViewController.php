@@ -503,6 +503,9 @@ final class DifferentialRevisionViewController extends DifferentialController {
       if ($repository) {
         $repo = '['.$repository->getName().'] ';
       }
+      else {
+        $repo = '['.basename($revision->getActiveDiff()->getSourcePath()).'] ';
+      }
     }
     catch (Exception $e) {
     }

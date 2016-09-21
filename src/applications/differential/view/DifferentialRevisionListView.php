@@ -108,6 +108,9 @@ final class DifferentialRevisionListView extends AphrontView {
         if ($repository) {
           $repo = '['.$repository->getName().'] ';
         }
+        else {
+          $repo = '['.basename($revision->getActiveDiff()->getSourcePath()).'] ';
+        }
       }
       catch (Exception $e) {
       }
