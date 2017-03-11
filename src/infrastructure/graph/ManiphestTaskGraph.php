@@ -51,12 +51,15 @@ final class ManiphestTaskGraph
         $assigned = phutil_tag('em', array(), pht('None'));
       }
 
+      $full_title = $object->getTitle();
+
       $link = phutil_tag(
         'a',
         array(
           'href' => $object->getURI(),
+          'title' => $full_title,
         ),
-        $object->getTitle());
+        $full_title);
 
       $link = array(
         phutil_tag(
@@ -95,8 +98,6 @@ final class ManiphestTaskGraph
           ));
     }
 
-    $link = AphrontTableView::renderSingleDisplayLine($link);
-
     return array(
       $marker,
       $trace,
@@ -123,6 +124,11 @@ final class ManiphestTaskGraph
           'graph-status',
           null,
           'wide pri object-link',
+        ))
+      ->setColumnVisibility(
+        array(
+          true,
+          !$this->getRenderOnlyAdjacentNodes(),
         ));
   }
 
